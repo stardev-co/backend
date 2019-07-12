@@ -30,6 +30,7 @@ app.use(async (req, res, next) => {
 
 require('./routes/user')(app)
 require('./routes/offer')(app)
+require('./routes/invoice')(app)
 
 app.use(async (req, res, next) => {
     await mongoose.disconnect()
