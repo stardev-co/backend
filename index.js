@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 require('./models/offer')
 require('./models/user')
+require('./models/invoice')
 
 const app = express()
 app.use(express.json())
