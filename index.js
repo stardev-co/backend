@@ -22,7 +22,7 @@ app.use(async (req, res, next) => {
     return res.status(500).end()
   }
   await mongoose.connect(process.env.DB_URI, {
-    connectTimeoutMS: 5000,
+    connectTimeoutMS: 50000,
     useNewUrlParser: true,
   })
   next()
