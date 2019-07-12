@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const asyncExpress = require('async-express')
 const auth = require('../middleware/auth')
 const Offer = mongoose.model('Offer')
 
@@ -9,15 +8,15 @@ module.exports = (app) => {
   app.get('/offers', auth, loadOffer)
 }
 
-const createOffer = asyncExpress(async (req, res) => {
+const createOffer = async (req, res) => {
   const offer = await Offer.create({
     ...req.body,
     ownerId: req.user._id,
   })
   res.json(offer._doc)
-})
+}
 
-const updateOffer = asyncExpress(async (req, res) => {
+const updateOffer = async (req, res) => {
   const { modifiedCount } = await Offer.updateOne({
     _id: mongoose.types.ObjectId(req.query._id),
   }, req.body)
@@ -26,9 +25,9 @@ const updateOffer = asyncExpress(async (req, res) => {
     return
   }
   res.status(204).end()
-})
+}
 
-const loadOffer = asyncExpress(async (req, res) => {
+const loadOffer = async (req, res) => {
   const offer = await Offer.findOne(req.query._id).lean().exec()
   res.json(offer)
-})
+}

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const asyncExpress = require('async-express')
 const auth = require('../middleware/auth')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
@@ -10,7 +9,7 @@ module.exports = (app) => {
   app.post('/users/login', login)
 }
 
-const createUser = asyncExpress(async (req, res) => {
+const createUser = async (req, res) => {
   if (!req.body.password || req.body.password.length < 6) {
     res.status(400).json({
       message: 'Please make sure your password is more than 6 characters'
@@ -45,9 +44,9 @@ const createUser = asyncExpress(async (req, res) => {
     createdAt: new Date(),
   })
   res.json({ ...user._doc, passwordHash: '', token })
-})
+}
 
-const login = asyncExpress(async (req, res) => {
+const login = async (req, res) => {
   if (!req.body.username || !req.body.password) {
     res.status(400).json({ message: 'Missing username or password'})
     return
@@ -73,4 +72,4 @@ const login = asyncExpress(async (req, res) => {
     process.env.WEB_TOKEN_SECRET
   )
   res.json({ ...user, passwordHash: '', token })
-})
+}
